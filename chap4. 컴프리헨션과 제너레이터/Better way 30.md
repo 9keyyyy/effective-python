@@ -91,25 +91,13 @@ def index_file(handle):
 
 ```
 
-### 결론
-- 결과로 시퀀스를 생성하는 함수를 만들 때, 리스트를 반환하기보다는 **제너레이터 사용을 추천**
-- 리스트 반환 방식의 문제점
-    - 반환할 리스트와 상호작용하는 부분이 많아 코드의 핵심을 알아보기 힘듦
-    - 반환하기 전에 리스트에 모든 결과를 다 저장해야 함
-        - 입력이 매우 크면 프로그램이 메모리 소진으로 중단될 수 있음
-- **제너레이터(generator)**
-    - 동작
-        - 제너레이터는 `yield` 식을 사용하는 함수에 의해 생성됨
-        - 함수가 호출되면 제너레이터 함수가 실제 실행되지 않고 즉시 이터레이터(iterator)를 반환
-        - 이터레이터는 제너레이터 함수의 본문에서 `yield`가 반환하는 값들로 이뤄진 집합을 생성함
-        - 이터레이터는`next` 내장 함수를 호출할 때마다 제너레이터 함수를 다음 `yield` 식까지 진행시킴
-        - 제너레이터가 `yield`에 전달하는 값은 이터레이터에 의해 호출하는 쪽에 반환됨
-    - 장점
-        - 가독성이 높고 깔끔함
-        - 작업 메모리에 모든 입출력을 저장할 필요가 없음 -> 입력이 아주 커도 출력 시퀀스 생성 가능
-    - 주의사항
-        - 제너레이터가 반환하는 이터레이터에는 상태가 있기 때문에, 호출하는 쪽에서 재사용 불가
-
 - 함수의 작업 메모리가 입력 중 가장 긴 줄의 길이로 제한되므로 메모리 소진 위험 감소
 - 실행 결과(`islice` 함수: Better Way 36 참조)
-    - `import itertools with open('address.txt', 'r', encoding='utf-8') as f: it = index_file(f) results = itertools.islice(it, 0, 10) print(list(results)) >>> [0, 8, 18, 23, 28, 38]`
+  ```python
+  import itertools with open('address.txt', 'r', encoding='utf-8') as f:
+      it = index_file(f)
+      results = itertools.islice(it, 0, 10)
+      print(list(results))
+
+  >>> [0, 8, 18, 23, 28, 38]
+  ```
